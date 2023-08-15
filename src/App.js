@@ -22,10 +22,23 @@ function App() {
     );
   }
   function Form() {
+    function FormSubmission(e) {
+      e.preventDefault();
+    }
+
     return (
-      <div className="add-form">
+      <form className="add-form" onSubmit={FormSubmission}>
         <h3>What do you need for your trip?</h3>
-      </div>
+        <select>
+          {Array.from({ length: 20 }, (_, i) => i + 1).map((val) => (
+            <option value={val} key={val}>
+              {val}
+            </option>
+          ))}
+        </select>
+        <input type="text" placeholder="Item..." />
+        <button>Add</button>
+      </form>
     );
   }
   function PackingList() {
