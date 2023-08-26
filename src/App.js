@@ -37,21 +37,29 @@ function App() {
 }
 
 function Accordion({ listItem }) {
+  const [curOpen, setCurOpen] = useState(null);
   return (
     <div className="accordion">
       {/* i is index , el is for loop single item.......below line is used to loop the item and accordianItem shows its using the UI */}
       {listItem.map((el, i) => (
-        <AccordionItem num={i} title={el.title} text={el.text} />
+        <AccordionItem
+          open={curOpen}
+          setopen={setCurOpen}
+          num={i}
+          title={el.title}
+          // text={el.text} this passed as childern props
+        >
+          {el.text}
+        </AccordionItem>
       ))}
     </div>
   );
 }
 
-function AccordionItem({ num, title, text }) {
-  const [isOpen, setIsOpen] = useState(false);
-
+function AccordionItem({ num, title, children, open, setopen }) {
+  const isOpen = num === open;
   function onToggle() {
-    setIsOpen(!isOpen);
+    setopen(isOpen ? null : num);
   }
 
   return (
@@ -60,7 +68,7 @@ function AccordionItem({ num, title, text }) {
       <p className="title">{title}</p>
       <p className="icon">{isOpen ? "-" : "+"}</p>
 
-      {isOpen && <div className="content-box">{text}</div>}
+      {isOpen && <div className="content-box">{children}</div>}
     </div>
   );
 }
